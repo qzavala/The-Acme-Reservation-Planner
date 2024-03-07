@@ -6,28 +6,24 @@ const uuid = require("uuid");
 
 async function createTables() {
   const SQL = `
-  DROP TABLE IF EXISTS reservation,
-  DROP TABLE IF EXISTS customer,
-  DROP TABLE IF EXISTS restaurant
+  DROP TABLE IF EXISTS reservation;
+  DROP TABLE IF EXISTS customer;
+  DROP TABLE IF EXISTS restaurant;
   
   CREATE TABLE customer(
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL
   );
-
   CREATE TABLE restaurant(
     id UUID PRIMARY KEY,
     name VARCHAR(255) NOT NULL
   );
-
   CREATE TABLE reservation(
     id UUID PRIMARY KEY,
     customer_id UUID REFERENCES customer(id) NOT NULL,
     restaurant_id UUID REFERENCES restaurant(id) NOT NULL,
-    reservation_date DATE NOT NULL,
-  );
-
-  `;
+    reservation_date DATE NOT NULL
+  );`;
   await client.query(SQL);
 }
 
@@ -72,7 +68,7 @@ async function createRestaurant(name) {
       return response.rows;
     }
 
-    async function fetchRestaurant() {
+    async function fetchRestaurants() {
       const SQL = `
         SELECT * FROM restaurant;
       `;
@@ -80,7 +76,7 @@ async function createRestaurant(name) {
       return response.rows;
     }
 
-    async function fetchReservation() {
+    async function fetchReservations() {
       const SQL = `
         SELECT * FROM reservation;
       `;
